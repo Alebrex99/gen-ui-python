@@ -16,7 +16,11 @@ import { AIMessage } from "@/ai/message";
 interfaccia con le API di LANG SERVE per gestire la logica di interazione con il backend;
 uso della vecchia DOC: https://js.langchain.com/v0.1/docs/ecosystem/langserve/ +
 https://v03.api.js.langchain.com/classes/_langchain_core.runnables_remote.RemoteRunnable.html*/
-const API_URL = "http://localhost:8000/chat"; //end-point del server
+
+//VERSIONE LOCALHOST
+//const API_URL = "http://localhost:8000/chat"; //end-point del server
+//VERSIONE SU VERCEL
+const API_URL = "https://gen-ui-python-backend.vercel.app/chat"; //end-point del server
 
 //NOTE: ? indica campo optional
 type ToolComponent = {

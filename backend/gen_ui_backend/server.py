@@ -19,10 +19,11 @@ def start() -> None:
     )
 
     # Configure CORS
-    # back end server on localhost 8000, mentre front end su 3000
+    # back end server on localhost 8000, mentre front end su 3000. ecco che qui inserisco la URL del frontend
     origins = [
         "http://localhost",
         "http://localhost:3000",
+        "https://gen-ui-python-frontend.vercel.app/", #URL del frontend su VERCEL app
     ]
 
     #necessario per poter accettare le richieste. vanno aggiunti tali CORS header quando chiami il server endpoint dal browser
