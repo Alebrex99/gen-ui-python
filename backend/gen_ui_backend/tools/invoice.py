@@ -34,7 +34,9 @@ class PaymentInfo(BaseModel):
         ..., description="Last four digits of the credit card number"
     )
 
-
+#Questo è lo schema di input per il tool invoice-parser.
+# Questo schema è utilizzato per validare i dati di input forniti al tool: estrae i campi dall'immagine uploaded,
+# poi va a usare invoice pre-built component (react) del frontend per riempire qualunque campo (es price, quantity, etc)
 class Invoice(BaseModel):
     """Parse an invoice and return it's values. This tool should ALWAYS be called if an image is provided."""
 
@@ -69,3 +71,5 @@ def invoice_parser(
         customerInfo=customerInfo,
         paymentInfo=paymentInfo,
     )
+
+

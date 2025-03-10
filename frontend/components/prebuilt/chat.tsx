@@ -80,6 +80,12 @@ export default function Chat() {
     // after which we can append to our chat history state
     (async () => {
       let lastEvent = await element.lastEvent;
+      //formato lastEvent: in base alla chiamata, es. se ho chiesto un tool (il tempo), gli ultimi eventi sono 2:
+      // prima l'invoke del modello, poi l'invoke del tools. Se fosse solo testo sarebbe solo l'invoke_model con il result testuale
+      /*Last event value:  [
+             { invoke_model: { tool_calls: [Array] } },
+             { invoke_tools: { tool_result: [Object] } }]*/
+
       if (Array.isArray(lastEvent)) {
         if (lastEvent[0].invoke_model && lastEvent[0].invoke_model.result) {
           setHistory((prev) => [
@@ -107,8 +113,8 @@ export default function Chat() {
         ]);
       }
     })();
-
-    setElements(newElements);
+    //al termine della submission sono impostati i nuovi elementi nello stato e l'input è resettato
+    setElements(newElements); //aggiornamento elements visualizzati nella chat
     setInput("");
     setSelectedFile(undefined);
   }

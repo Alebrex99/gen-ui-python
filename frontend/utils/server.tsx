@@ -37,25 +37,18 @@ export function streamRunnableUI<RunInput, RunOutput>(
   },
 ) {
   const ui = createStreamableUI();
-  const [lastEvent, resolve] = withResolvers<
-    Array<any> | Record<string, any>
-  >();
+  const [lastEvent, resolve] = withResolvers<Array<any> | Record<string, any>>();
   let shouldRecordLastEvent = true;
+  console.log("Inputs passed to streamEvents, to backend: ", inputs);
 
   (async () => {
     let lastEventValue: StreamEvent | null = null;
     const callbacks: RunUICallbacks = {};
-
-    for await (const streamEvent of (
-      runnable as Runnable<RunInput, RunOutput>
-    ).streamEvents(inputs, {
-      version: "v1",
-    })) {
+    //for await ... of è un ciclo che permette di iterare su oggetti iterabili che restituiscono promesse
+    for await (const streamEvent of (runnable as Runnable<RunInput, RunOutput>).streamEvents(inputs, {version: "v1",})) {
       for await (const handler of options.eventHandlers) {
-        await handler(streamEvent, {
-          ui,
-          callbacks,
-        });
+        //console.log("StreamEvent: ", streamEvent);
+        await handler(streamEvent, {ui, callbacks,});
       }
       if (shouldRecordLastEvent) {
         lastEventValue = streamEvent;
@@ -67,12 +60,15 @@ export function streamRunnableUI<RunInput, RunOutput>(
         shouldRecordLastEvent = false;
       }
     }
-
     // resolve the promise, which will be sent
     // to the client thanks to RSC
     const resolveValue =
       lastEventValue?.data.output || lastEventValue?.data.chunk?.data?.output;
     resolve(resolveValue);
+    console.log("lastEvent received : ", resolveValue);
+    if(resolveValue?.invoke_tools in resolveValue){
+        console.log("Invoke_tools received : ", resolveValue.invoke_tools);
+    }
     Object.values(callbacks).forEach((cb) => cb.done());
     ui.done();
   })();
@@ -109,11 +105,14 @@ export function withResolvers<T>() {
  */
 export function exposeEndpoints<T extends Record<string, unknown>>(
   actions: T,
-): {
+): /*questo indica il tipo di ritorno: ovvero un oggetto formato da una funzione che prende in input un oggetto
+con una chiave children di tipo ReactNode e ritorna una Promise di un JSX.Element*/{
   (props: { children: ReactNode }): Promise<JSX.Element>;
   $$types?: T;
-} {
-  return async function AI(props: { children: ReactNode }) {
+}
+//viene ritornato un COMPONENTE REACT (attenzione non è invocato)
+{
+  return async function AI(props: { children: ReactNode }) { //dichiarazione tramite variabile in JS
     return <AIProvider actions={actions}>{props.children}</AIProvider>;
   };
 }

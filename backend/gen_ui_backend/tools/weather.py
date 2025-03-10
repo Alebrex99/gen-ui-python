@@ -5,7 +5,8 @@ import requests
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain_core.tools import tool
 
-
+#https://python.langchain.com/docs/how_to/tool_calling/
+#input principali per il tool weather_data
 class WeatherInput(BaseModel):
     city: str = Field(..., description="The city name to get weather for")
     state: str = Field(
@@ -15,7 +16,7 @@ class WeatherInput(BaseModel):
         "usa", description="The two letter country abbreviation to get weather for"
     )
 
-
+#Vengono colpite 3 APIs
 @tool("weather-data", args_schema=WeatherInput, return_direct=True)
 def weather_data(city: str, state: str, country: str = "usa") -> dict:
     """Get the current temperature for a city."""

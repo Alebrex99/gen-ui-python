@@ -175,7 +175,7 @@ function ChartContent() {
           throw new Error("Something went wrong.");
         }
         return setElements([
-          <div className="mt-4 mb-6 text-center">
+          <div key="chart-header" className="mt-4 mb-6 text-center">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               {displayFormatBar.title}
             </h2>
@@ -199,7 +199,7 @@ function ChartContent() {
           throw new Error("Something went wrong.");
         }
         return setElements([
-          <div className="mt-4 mb-6 text-center">
+          <div key="chart-header" className="mt-4 mb-6 text-center">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               {displayFormatPie.title}
             </h2>
@@ -223,7 +223,7 @@ function ChartContent() {
           throw new Error("Something went wrong.");
         }
         return setElements([
-          <div className="mt-4 mb-6 text-center">
+          <div key="chart-header" className="mt-4 mb-6 text-center">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               {displayFormatLine.title}
             </h2>
