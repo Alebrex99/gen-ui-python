@@ -23,7 +23,7 @@ def start() -> None:
     origins = [
         "http://localhost",
         "http://localhost:3000",
-        "https://gen-ui-python-frontend.vercel.app/", #URL del frontend su VERCEL app
+        "https://gen-ui-python-frontend.vercel.app", #URL del frontend su VERCEL app
     ]
 
     #necessario per poter accettare le richieste. vanno aggiunti tali CORS header quando chiami il server endpoint dal browser
@@ -56,4 +56,5 @@ def start() -> None:
     add_routes(app, runnable, path="/chat", playground_type="chat") #viene passato il runnable della nostra APP, qualcosa di invocabile,
     # ovvero il COMPILED GRAPH; il runnable è ciò che verrà chiamato quando colpisci l'endpoint route = /chat
     print("Starting server...")
-    uvicorn.run(app, host="0.0.0.0", port=8000) #inizio SERVER alla porta 8000
+    #uvicorn.run(app, host="0.0.0.0", port=8000) #inizio SERVER alla porta 8000
+    uvicorn.run(app, host="0.0.0.0", port=8000)  # inizio SERVER alla porta 8000
