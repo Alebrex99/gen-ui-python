@@ -7,10 +7,9 @@ from langchain_core.runnables import RunnableConfig
 from langchain_openai import ChatOpenAI
 from langgraph.graph import END, StateGraph
 from langgraph.graph.graph import CompiledGraph
-
-from gen_ui_backend.tools.github import github_repo
-from gen_ui_backend.tools.invoice import invoice_parser
-from gen_ui_backend.tools.weather import weather_data
+from tools.github import github_repo
+from tools.invoice import invoice_parser
+from tools.weather import weather_data
 
 """Questo modulo contiene la catena di esecuzione per la generazione di grafici. cioè contiene
 il LANG GRAPH chain, quindi la catena sequenziale ad alto livello"""
